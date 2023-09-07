@@ -1,17 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import AppLayout from "./pages/AppLayout";
+import AppLayout from "./components/AppLayout";
+import { WeatherProvider } from "./contexts/WeatherContext";
 
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<HomePage />} />
-          <Route path="app" element={<AppLayout />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <WeatherProvider>
+      <AppLayout />
+    </WeatherProvider>
   );
 }
 
