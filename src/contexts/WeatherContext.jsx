@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 
-const BASE_URL = "https://api.openweathermap.org/data/2.5/";
-const API_KEY = "0be9ed45b9adbda14096d32227e62788";
+const BASE_URL = "https://api.open-meteo.com/v1/";
+const GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/";
 const DEFAULT_LOCATION = { lat: 28.6139, lon: 77.209 };
 const WeatherContext = createContext();
 const initialState = {
   isLoading: false,
-  weatherData: [],
+  weatherData: null,
   error: "",
 };
 
@@ -37,7 +37,7 @@ function WeatherProvider({ children }) {
   async function fetchWeatherPosition(lat, lon) {
     try {
       const response = await fetch(
-        `${BASE_URL}forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+        `${BASE_URL}forecast?latitude=${lat}&longitude=${lon}&timezone=auto&daily=weathercode,temperature_2m_max,temperature_2m_min`
       );
 
       if (!response.ok) throw new Error("Couldn't fetch weather data...!");
@@ -49,22 +49,28 @@ function WeatherProvider({ children }) {
     }
   }
 
-  async function fetchWeatherQuery(cityName) {
+  async function fetchWeatherQuery(location) {
     try {
       dispatch({ type: "loading" });
 
-      const response = await fetch(
-        `${BASE_URL}weather?q=${cityName}&appid=${API_KEY}`
-      );
+      const geoRes = await fetch(`${GEOCODING_URL}search?name=${location}`);
 
-      if (!response.ok) throw new Error("City not found...!");
+      const geoData = await geoRes.json();
 
-      let data = await response.json();
-      const { lat, lon } = data.coord;
+      if (!geoData.results) throw new Error("Location not found");
 
-      data = await fetchWeatherPosition(lat, lon);
+      const {
+        latitude: lat,
+        longitude: lon,
+        // timezone,
+        // name,
+        // country_code,
+      } = geoData.results.at(0);
+      // setDisplayLocation(`${name} ${convertToFlag(country_code)}`);
 
-      dispatch({ type: "weather/loaded", payload: data });
+      const weatherData = await fetchWeatherPosition(lat, lon);
+
+      dispatch({ type: "weather/loaded", payload: weatherData });
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
     }
@@ -73,17 +79,19 @@ function WeatherProvider({ children }) {
   useEffect(function () {
     (async function () {
       try {
+        dispatch({ type: "loading" });
+
         const { lat, lon } = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(
             (pos) =>
-              resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+              resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
             (error) => reject(error)
           );
         });
 
-        const data = await fetchWeatherPosition(lat, lon);
+        const weatherData = await fetchWeatherPosition(lat, lon);
 
-        dispatch({ type: "weather/loaded", payload: data });
+        dispatch({ type: "weather/loaded", payload: weatherData });
       } catch (error) {
         dispatch({ type: "error", payload: error.message });
 

@@ -2,10 +2,8 @@ import { useState } from "react";
 import { useWeather } from "../contexts/WeatherContext";
 
 function SearchBar() {
-  const { fetchWeatherQuery, weatherData } = useWeather();
+  const { fetchWeatherQuery } = useWeather();
   const [cityName, setCityName] = useState("");
-
-  console.log(weatherData);
 
   async function handleSubmit(e) {
     e.preventDefault();
