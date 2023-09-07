@@ -8,6 +8,7 @@ const WeatherContext = createContext();
 const initialState = {
   isLoading: false,
   weatherData: null,
+  currentWeather: null,
   error: "",
 };
 
@@ -28,11 +29,8 @@ function reducer(state, action) {
 }
 
 function WeatherProvider({ children }) {
-  const [{ isLoading, weatherData, error }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
-  // const [weatherData, setWeatherData] = useState(null);
+  const [{ isLoading, weatherData, currentWeather, error }, dispatch] =
+    useReducer(reducer, initialState);
 
   async function fetchWeatherPosition(lat, lon) {
     try {
@@ -111,7 +109,13 @@ function WeatherProvider({ children }) {
 
   return (
     <WeatherContext.Provider
-      value={{ isLoading, error, weatherData, fetchWeatherQuery }}
+      value={{
+        isLoading,
+        error,
+        weatherData,
+        currentWeather,
+        fetchWeatherQuery,
+      }}
     >
       {children}
     </WeatherContext.Provider>
