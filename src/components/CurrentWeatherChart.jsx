@@ -6,6 +6,7 @@ import {
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
@@ -20,6 +21,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend
 );
 
@@ -28,18 +30,29 @@ const options = {
   plugins: {
     legend: {
       position: "top",
+      labels: {
+        color: "white", // Change the label text color to white
+      },
     },
     title: {
       display: true,
-      text: "Chart.js Line Chart",
-    },
-  },
-  elements: {
-    line: {
-      backgroundColor: "rgba(255, 99, 132, 0.0)", // Set the background color for the line
+      text: "Current Weather Data",
+      color: "white",
     },
   },
   aspectRatio: 5,
+  scales: {
+    x: {
+      ticks: {
+        color: "white", // Change the x-axis label text color to blue
+      },
+    },
+    y: {
+      ticks: {
+        color: "white", // Change the y-axis label text color to blue
+      },
+    },
+  },
 };
 
 function CurrentWeatherChart() {
@@ -67,8 +80,12 @@ function CurrentWeatherChart() {
       labels,
       datasets: [
         {
+          fill: true,
           label: "Temperature",
+          color: "white",
           data: temperatureData,
+          borderColor: "cyan",
+          backgroundColor: "rgba(0, 255, 255, 0.3)",
         },
       ],
     };
