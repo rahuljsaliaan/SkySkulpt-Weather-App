@@ -35,7 +35,7 @@ function WeatherProvider({ children }) {
   async function fetchWeatherPosition(lat, lon) {
     try {
       const response = await fetch(
-        `${BASE_URL}forecast?latitude=${lat}&longitude=${lon}&timezone=auto&daily=weathercode,temperature_2m_max,temperature_2m_min`
+        `${BASE_URL}forecast?latitude=${lat}&longitude=${lon}&timezone=auto&daily=weathercode,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weathercode`
       );
 
       if (!response.ok) throw new Error("Couldn't fetch weather data...!");

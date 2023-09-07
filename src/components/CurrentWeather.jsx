@@ -1,4 +1,6 @@
 import { useWeather } from "../contexts/WeatherContext";
+import CurrentWeatherChart from "./CurrentWeatherChart";
+import CurrentWeatherCard from "./CurrentWeatherCard";
 import Spinner from "./Spinner";
 
 function CurrentWeather() {
@@ -8,7 +10,12 @@ function CurrentWeather() {
 
   if (weatherData) {
     console.log(weatherData);
-    return <div className="bg-red-500 h-100 w-100">hello</div>;
+    return (
+      <div className="flex gap-5">
+        <CurrentWeatherCard />
+        <CurrentWeatherChart />
+      </div>
+    );
   }
 }
 
