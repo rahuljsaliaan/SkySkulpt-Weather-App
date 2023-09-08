@@ -16,7 +16,8 @@ import PropTypes from "prop-types";
 
 const WeatherContext = createContext();
 const initialState = {
-  isLoading: false,
+  initialLoading: false,
+  isLoading: true,
   weatherData: null,
   selectedWeather: null,
   error: "",
@@ -25,10 +26,10 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "initialLoading":
-      return { ...state, isLoading: true };
+      return { ...state, initialLoading: true };
 
     case "loading":
-      return { ...state, error: "" };
+      return { ...state, isLoading: true, error: "" };
 
     case "weather/loaded":
       return {
@@ -78,6 +79,9 @@ function WeatherProvider({ children }) {
   async function fetchWeatherQuery(location) {
     try {
       dispatch({ type: "loading" });
+
+      if (location.length < 2)
+        throw new Error("Please Type at least 2 characters");
 
       const geoRes = await fetch(`${GEOCODING_URL}search?name=${location}`);
 

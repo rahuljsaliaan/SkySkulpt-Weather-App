@@ -34,7 +34,7 @@ const options = {
     },
     title: {
       display: true,
-      text: "Current Weather Data",
+      text: "Weather Summary",
       color: "white",
     },
   },
@@ -76,7 +76,7 @@ function CurrentWeatherChart() {
     };
 
     return (
-      <div className="shadow-xl rounded-lg ">
+      <div className="shadow-xl rounded-lg animate-fade-in">
         <Line options={options} data={data} />
       </div>
     );

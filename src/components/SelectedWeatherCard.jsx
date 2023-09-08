@@ -8,7 +8,7 @@ function CurrentWeatherCard() {
 
   if (selectedWeather) {
     return (
-      <div className="bg-black/10 shadow-xl px-6 py-4 flex flex-col gap-5">
+      <div className="bg-black/10 shadow-xl px-6 py-4 flex flex-col gap-5 animate-fade-in">
         <h3 className="text-white text-2xl text-center">
           Weather as of
           <div className="text-cyan-300">
