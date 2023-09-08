@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 // eslint-disable-next-line react/prop-types
 function ToastMessage({ message, type }) {
-  console.log(message);
   useEffect(
     function () {
       if (type === "error") toast.error(message);

@@ -1,7 +1,7 @@
 import { useWeather } from "../contexts/WeatherContext";
 import { getWeatherIcon } from "../helpers/getWeatherIcon";
-import { formatDate } from "../utils/formatters/formatDate";
-import { formatDay } from "../utils/formatters/formatDay";
+import { formatDate } from "../utils/Formatters/formatDate";
+import { formatDay } from "../utils/Formatters/formatDay";
 
 function CurrentWeatherCard() {
   const { selectedWeather } = useWeather();

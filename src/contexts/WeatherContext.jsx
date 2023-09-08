@@ -5,14 +5,11 @@ import {
   useReducer,
   useCallback,
 } from "react";
-import { formatTimestampToAMPM } from "../utils/formatters/formatTimeStampToAMPM";
-import {
-  BASE_URL,
-  GEOCODING_URL,
-  DEFAULT_LOCATION,
-  CURRENT_DATE,
-} from "../config/config";
+import { formatTimestampToAMPM } from "../utils/Formatters/formatTimeStampToAMPM";
+import { BASE_URL, DEFAULT_LOCATION, CURRENT_DATE } from "../config/config";
 import PropTypes from "prop-types";
+import reverseGeoCode from "../utils/Transformers/reverseGeoCode";
+import geoCode from "../utils/Transformers/geoCode";
 
 const WeatherContext = createContext();
 const initialState = {
@@ -59,8 +56,6 @@ function WeatherProvider({ children }) {
   const [{ isLoading, weatherData, selectedWeather, error }, dispatch] =
     useReducer(reducer, initialState);
 
-  console.log(weatherData);
-
   async function fetchWeatherPosition(lat, lon) {
     try {
       const response = await fetch(
@@ -83,24 +78,13 @@ function WeatherProvider({ children }) {
       if (location.length < 2)
         throw new Error("Please Type at least 2 characters");
 
-      const geoRes = await fetch(`${GEOCODING_URL}search?name=${location}`);
+      const { city, state, lat, lng } = await geoCode(location);
 
-      const geoData = await geoRes.json();
-
-      if (!geoData.results) throw new Error("Location not found");
-
-      const {
-        latitude: lat,
-        longitude: lon,
-        name,
-        // country_code,
-      } = geoData.results.at(0);
-
-      const weatherData = await fetchWeatherPosition(lat, lon);
+      const weatherData = await fetchWeatherPosition(lat, lng);
 
       dispatch({
         type: "weather/loaded",
-        payload: { ...weatherData, location: name },
+        payload: { ...weatherData, location: `${city}, ${state}` },
       });
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
@@ -122,7 +106,12 @@ function WeatherProvider({ children }) {
 
         const weatherData = await fetchWeatherPosition(lat, lon);
 
-        dispatch({ type: "weather/loaded", payload: weatherData });
+        const { city, state } = await reverseGeoCode(lat, lon);
+
+        dispatch({
+          type: "weather/loaded",
+          payload: { ...weatherData, location: `${city}, ${state}` },
+        });
       } catch (error) {
         dispatch({ type: "error", payload: error.message });
 

@@ -1,5 +1,5 @@
 import { useWeather } from "../contexts/WeatherContext";
-import { formatDay } from "../utils/formatters/formatDay";
+import { formatDay } from "../utils/Formatters/formatDay";
 import WeatherCard from "./WeatherCard";
 
 function WeatherForecast() {
