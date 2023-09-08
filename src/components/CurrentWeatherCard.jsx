@@ -11,15 +11,15 @@ function CurrentWeatherCard() {
 
   if (selectedWeather) {
     return (
-      <div className="bg-black/10 shadow-xl px-6 py-4 flex flex-col gap-6">
+      <div className="bg-black/10 shadow-xl px-6 py-4 flex flex-col gap-5">
         <h3 className="text-white text-2xl text-center">
-          Weather as of{" "}
+          Weather as of
           <div className="text-cyan-300">
             <strong>{formatDay(selectedWeather.date)}</strong>&nbsp;
             <em>{formatDate(selectedWeather.date)}</em>
           </div>
         </h3>
-        <div className="text-white flex">
+        <div className="text-white flex gap-5">
           <span className="">
             {getWeatherIcon(selectedWeather.avgWeathercode, 100)}
           </span>

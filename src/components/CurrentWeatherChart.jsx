@@ -79,7 +79,7 @@ function CurrentWeatherChart() {
     };
 
     return (
-      <div className="shadow-lg rounded-lg ">
+      <div className="shadow-xl rounded-lg ">
         <Line options={options} data={data} />
       </div>
     );
