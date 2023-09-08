@@ -37,12 +37,13 @@ export function getWeatherIcon(wmoCode, size = 70) {
       return (
         <FaIcons.FaCloudShowersHeavy key="cloudShowersHeavy" size={size} />
       );
+
     case 95:
-      return <FaIcons.FaBolt key="bolt" size={size} />;
+      return <FaIcons.FaBolt key="thunderBolt" size={size} />;
     case 96:
     case 99:
-      return <FaIcons.FaThunderstorm key="thunderstorm" size={size} />;
+      return <FaIcons.FaBolt key="thunderstorm" size={size} />;
     default:
-      return null; // You can return null for unknown codes
+      return <FaIcons.FaCloud key="cloud" size={size} />; // You can return null for unknown codes
   }
 }
