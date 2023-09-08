@@ -9,7 +9,6 @@ function CurrentWeather() {
   if (isLoading) return <Spinner />;
 
   if (weatherData) {
-    console.log(weatherData);
     return (
       <div className="flex gap-5">
         <CurrentWeatherCard />

@@ -1,14 +1,27 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useCallback,
+} from "react";
 import PropTypes from "prop-types";
+import { formatTimestampToAMPM } from "../utils/formatters/formatTimeStampToAMPM";
 
 const BASE_URL = "https://api.open-meteo.com/v1/";
 const GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/";
 const DEFAULT_LOCATION = { lat: 28.6139, lon: 77.209 };
+const CURRENT_DATE = new Date(
+  new Date().getTime() - new Date().getTimezoneOffset() * 60000
+)
+  .toISOString()
+  .split("T")[0];
+
 const WeatherContext = createContext();
 const initialState = {
   isLoading: false,
   weatherData: null,
-  currentWeather: null,
+  selectedWeather: null,
   error: "",
 };
 
@@ -20,6 +33,9 @@ function reducer(state, action) {
     case "weather/loaded":
       return { ...state, weatherData: action.payload, isLoading: false };
 
+    case "weather/selected":
+      return { ...state, selectedWeather: action.payload, isLoading: false };
+
     case "error":
       return { ...state, error: action.payload };
 
@@ -29,7 +45,7 @@ function reducer(state, action) {
 }
 
 function WeatherProvider({ children }) {
-  const [{ isLoading, weatherData, currentWeather, error }, dispatch] =
+  const [{ isLoading, weatherData, selectedWeather, error }, dispatch] =
     useReducer(reducer, initialState);
 
   async function fetchWeatherPosition(lat, lon) {
@@ -107,13 +123,64 @@ function WeatherProvider({ children }) {
     })();
   }, []);
 
+  const handleOnSelectWeather = useCallback(
+    function (date = CURRENT_DATE) {
+      dispatch({ type: "loading" });
+
+      const { hourly } = weatherData;
+      const {
+        temperature_2m: temperatureData,
+        relativehumidity_2m: humidity,
+        time,
+      } = hourly;
+
+      const selectedTHT = time
+        .map((timestamp, i) => {
+          if (timestamp.startsWith(date)) {
+            return {
+              time: formatTimestampToAMPM(timestamp),
+              temperature: temperatureData[i],
+              humidity: humidity[i],
+            };
+          }
+          // Return null or undefined for elements that don't match the condition
+          return null;
+        })
+        .filter((item) => item !== null);
+
+      const avg = (arr) =>
+        (arr.reduce((acc, item) => acc + item, 0) / arr.length).toFixed(2);
+
+      const selectedWeatherData = {
+        date,
+        time: selectedTHT.map((item) => item.time),
+        temperature: selectedTHT.map((item) => item.temperature),
+        avgTemperature: avg(selectedTHT.map((item) => item.temperature)),
+        humidity: avg(selectedTHT.map((item) => item.humidity)),
+      };
+
+      dispatch({ type: "weather/selected", payload: selectedWeatherData });
+    },
+    [weatherData]
+  );
+
+  useEffect(
+    function () {
+      if (!weatherData) return;
+
+      handleOnSelectWeather();
+    },
+    [weatherData, handleOnSelectWeather]
+  );
+
   return (
     <WeatherContext.Provider
       value={{
         isLoading,
         error,
         weatherData,
-        currentWeather,
+        selectedWeather,
+        handleOnSelectWeather,
         fetchWeatherQuery,
       }}
     >

@@ -4,11 +4,12 @@ import WeatherCard from "./WeatherCard";
 import Spinner from "./Spinner";
 
 function WeatherForecast() {
-  const { isLoading, weatherData } = useWeather();
+  const { isLoading, weatherData, selectedWeather, handleOnSelectWeather } =
+    useWeather();
 
   if (isLoading) return <Spinner />;
 
-  if (weatherData) {
+  if (weatherData && selectedWeather) {
     const {
       temperature_2m_max: max,
       temperature_2m_min: min,
@@ -25,6 +26,8 @@ function WeatherForecast() {
             min={Math.floor(min.at(i))}
             max={Math.ceil(max.at(i))}
             code={codes.at(i)}
+            onSelectWeather={() => handleOnSelectWeather(date)}
+            isSelected={date === selectedWeather.date}
           />
         ))}
       </div>

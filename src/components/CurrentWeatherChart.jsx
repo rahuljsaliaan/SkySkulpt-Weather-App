@@ -12,7 +12,6 @@ import {
 import { Line } from "react-chartjs-2";
 import { useWeather } from "../contexts/WeatherContext";
 import Spinner from "./Spinner";
-import { formatTimestampToAMPM } from "../utils/formatters/formatTimeStampToAMPM";
 
 ChartJS.register(
   CategoryScale,
@@ -56,25 +55,15 @@ const options = {
 };
 
 function CurrentWeatherChart() {
-  const { isLoading, weatherData } = useWeather();
-  const now = new Date();
-  const today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
-    .toISOString()
-    .split("T")[0];
+  const { isLoading, selectedWeather } = useWeather();
 
   if (isLoading) return <Spinner />;
 
-  if (weatherData) {
-    const { temperature_2m: temperatureData, time } = weatherData.hourly;
+  if (selectedWeather) {
+    const { time, temperature } = selectedWeather;
+    console.log(temperature);
 
-    const labels = time
-      .filter((time) => {
-        const timestampDate = time.split("T")[0];
-        return timestampDate === today;
-      })
-      .map((filteredTime) => formatTimestampToAMPM(filteredTime));
-
-    console.log(labels);
+    const labels = time;
 
     const data = {
       labels,
@@ -83,7 +72,7 @@ function CurrentWeatherChart() {
           fill: true,
           label: "Temperature",
           color: "white",
-          data: temperatureData,
+          data: temperature,
           borderColor: "cyan",
           backgroundColor: "rgba(0, 255, 255, 0.3)",
         },
