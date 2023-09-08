@@ -51,7 +51,7 @@ function WeatherProvider({ children }) {
   async function fetchWeatherPosition(lat, lon) {
     try {
       const response = await fetch(
-        `${BASE_URL}forecast?latitude=${lat}&longitude=${lon}&timezone=auto&daily=weathercode,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relativehumidity_2m,weathercode`
+        `${BASE_URL}forecast?latitude=${lat}&longitude=${lon}&timezone=auto&daily=weathercode,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,pressure_msl,weathercode`
       );
 
       if (!response.ok) throw new Error("Couldn't fetch weather data...!");
@@ -76,15 +76,16 @@ function WeatherProvider({ children }) {
       const {
         latitude: lat,
         longitude: lon,
-        // timezone,
-        // name,
+        name,
         // country_code,
       } = geoData.results.at(0);
-      // setDisplayLocation(`${name} ${convertToFlag(country_code)}`);
 
       const weatherData = await fetchWeatherPosition(lat, lon);
 
-      dispatch({ type: "weather/loaded", payload: weatherData });
+      dispatch({
+        type: "weather/loaded",
+        payload: { ...weatherData, location: name },
+      });
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
     }
@@ -127,11 +128,23 @@ function WeatherProvider({ children }) {
     function (date = CURRENT_DATE) {
       dispatch({ type: "loading" });
 
-      const { hourly } = weatherData;
+      const {
+        hourly,
+        daily,
+        hourly_units: {
+          temperature_2m: temperatureUnit,
+          relativehumidity_2m: humidityUnit,
+          pressure_msl: pressureUnit,
+          windspeed_10m: windSpeedUnit,
+        },
+      } = weatherData;
       const {
         temperature_2m: temperatureData,
         relativehumidity_2m: humidity,
         time,
+        weathercode,
+        pressure_msl,
+        windspeed_10m,
       } = hourly;
 
       const selectedTHT = time
@@ -141,6 +154,9 @@ function WeatherProvider({ children }) {
               time: formatTimestampToAMPM(timestamp),
               temperature: temperatureData[i],
               humidity: humidity[i],
+              weathercode: weathercode[i],
+              pressure: pressure_msl[i],
+              windSpeed: windspeed_10m[i],
             };
           }
           // Return null or undefined for elements that don't match the condition
@@ -148,15 +164,32 @@ function WeatherProvider({ children }) {
         })
         .filter((item) => item !== null);
 
+      const mapWeatherData = (arr, data) => arr.map((item) => item[data]);
+
       const avg = (arr) =>
-        (arr.reduce((acc, item) => acc + item, 0) / arr.length).toFixed(2);
+        Math.round(arr.reduce((acc, item) => acc + item, 0) / arr.length);
 
       const selectedWeatherData = {
         date,
-        time: selectedTHT.map((item) => item.time),
-        temperature: selectedTHT.map((item) => item.temperature),
-        avgTemperature: avg(selectedTHT.map((item) => item.temperature)),
-        humidity: avg(selectedTHT.map((item) => item.humidity)),
+        hourlyUnits: {
+          temperatureUnit,
+          humidityUnit,
+          pressureUnit,
+          windSpeedUnit,
+        },
+        time: mapWeatherData(selectedTHT, "time"),
+        temperature: mapWeatherData(selectedTHT, "temperature"),
+        avgTemperature: avg(mapWeatherData(selectedTHT, "temperature")),
+        humidity: mapWeatherData(selectedTHT, "humidity"),
+        avgHumidity: avg(mapWeatherData(selectedTHT, "humidity")),
+        pressure: mapWeatherData(selectedTHT, "pressure"),
+        avgPressure: avg(mapWeatherData(selectedTHT, "pressure")),
+        windSpeed: mapWeatherData(selectedTHT, "windSpeed"),
+        avgWindSpeed: avg(mapWeatherData(selectedTHT, "windSpeed")),
+        weathercode: mapWeatherData(selectedTHT, "weathercode"),
+        avgWeathercode: daily.weathercode.at(
+          daily.time.findIndex((dateItem) => dateItem === date)
+        ),
       };
 
       dispatch({ type: "weather/selected", payload: selectedWeatherData });

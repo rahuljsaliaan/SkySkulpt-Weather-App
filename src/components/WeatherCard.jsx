@@ -9,7 +9,7 @@ function WeatherCard({ date, min, max, code, onSelectWeather, isSelected }) {
       ${isSelected && "scale-105 shadow-2xl bg-cyan-500"}
       `}
     >
-      <div className="">{getWeatherIcon(code)}</div>
+      <div className="py-2">{getWeatherIcon(code)}</div>
       <p>{date}</p>
       <p>
         {min}&deg; &mdash; <strong>{max}</strong>

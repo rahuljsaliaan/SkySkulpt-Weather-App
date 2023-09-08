@@ -61,7 +61,6 @@ function CurrentWeatherChart() {
 
   if (selectedWeather) {
     const { time, temperature } = selectedWeather;
-    console.log(temperature);
 
     const labels = time;
 
@@ -80,7 +79,7 @@ function CurrentWeatherChart() {
     };
 
     return (
-      <div className="h-full w-full shadow-lg rounded-lg ">
+      <div className="shadow-lg rounded-lg ">
         <Line options={options} data={data} />
       </div>
     );
