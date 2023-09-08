@@ -5,17 +5,14 @@ import {
   useReducer,
   useCallback,
 } from "react";
-import PropTypes from "prop-types";
 import { formatTimestampToAMPM } from "../utils/formatters/formatTimeStampToAMPM";
-
-const BASE_URL = "https://api.open-meteo.com/v1/";
-const GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/";
-const DEFAULT_LOCATION = { lat: 28.6139, lon: 77.209 };
-const CURRENT_DATE = new Date(
-  new Date().getTime() - new Date().getTimezoneOffset() * 60000
-)
-  .toISOString()
-  .split("T")[0];
+import {
+  BASE_URL,
+  GEOCODING_URL,
+  DEFAULT_LOCATION,
+  CURRENT_DATE,
+} from "../config/config";
+import PropTypes from "prop-types";
 
 const WeatherContext = createContext();
 const initialState = {
