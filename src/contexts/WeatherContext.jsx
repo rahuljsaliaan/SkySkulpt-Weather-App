@@ -14,7 +14,7 @@ import geoCode from "../utils/Transformers/geoCode";
 const WeatherContext = createContext();
 const initialState = {
   initialLoading: false,
-  isLoading: true,
+  isLoading: false,
   weatherData: null,
   selectedWeather: null,
   error: "",
@@ -33,6 +33,7 @@ function reducer(state, action) {
         ...state,
         weatherData: action.payload,
         isLoading: false,
+        initialLoading: false,
         error: "",
       };
 
@@ -41,6 +42,7 @@ function reducer(state, action) {
         ...state,
         selectedWeather: action.payload,
         isLoading: false,
+        initialLoading: false,
         error: "",
       };
 
@@ -53,8 +55,10 @@ function reducer(state, action) {
 }
 
 function WeatherProvider({ children }) {
-  const [{ isLoading, weatherData, selectedWeather, error }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { initialLoading, isLoading, weatherData, selectedWeather, error },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   async function fetchWeatherPosition(lat, lon) {
     try {
@@ -214,6 +218,7 @@ function WeatherProvider({ children }) {
   return (
     <WeatherContext.Provider
       value={{
+        initialLoading,
         isLoading,
         error,
         weatherData,
