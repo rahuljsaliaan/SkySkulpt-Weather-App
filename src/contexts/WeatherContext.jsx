@@ -5,7 +5,7 @@ import {
   useReducer,
   useCallback,
 } from "react";
-import { formatTimestampToAMPM } from "../utils/Formatters/formatTimeStampToAMPM";
+import { formatTimestampToAMPM } from "../utils/Formatters/formatTimestampToAMPM";
 import { BASE_URL, DEFAULT_LOCATION, CURRENT_DATE } from "../config/config";
 import PropTypes from "prop-types";
 import reverseGeoCode from "../utils/Transformers/reverseGeoCode";
