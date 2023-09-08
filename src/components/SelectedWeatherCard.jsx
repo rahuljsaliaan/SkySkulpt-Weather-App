@@ -2,12 +2,9 @@ import { useWeather } from "../contexts/WeatherContext";
 import { getWeatherIcon } from "../helpers/getWeatherIcon";
 import { formatDate } from "../utils/formatters/formatDate";
 import { formatDay } from "../utils/formatters/formatDay";
-import Spinner from "./Spinner";
 
 function CurrentWeatherCard() {
-  const { isLoading, selectedWeather } = useWeather();
-
-  if (isLoading) return <Spinner />;
+  const { selectedWeather } = useWeather();
 
   if (selectedWeather) {
     return (

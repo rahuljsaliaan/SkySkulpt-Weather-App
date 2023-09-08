@@ -1,13 +1,9 @@
 import { useWeather } from "../contexts/WeatherContext";
 import { formatDay } from "../utils/formatters/formatDay";
 import WeatherCard from "./WeatherCard";
-import Spinner from "./Spinner";
 
 function WeatherForecast() {
-  const { isLoading, weatherData, selectedWeather, handleOnSelectWeather } =
-    useWeather();
-
-  if (isLoading) return <Spinner />;
+  const { weatherData, selectedWeather, handleOnSelectWeather } = useWeather();
 
   if (weatherData && selectedWeather) {
     const {

@@ -24,17 +24,30 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "loading":
+    case "initialLoading":
       return { ...state, isLoading: true };
 
+    case "loading":
+      return { ...state, error: "" };
+
     case "weather/loaded":
-      return { ...state, weatherData: action.payload, isLoading: false };
+      return {
+        ...state,
+        weatherData: action.payload,
+        isLoading: false,
+        error: "",
+      };
 
     case "weather/selected":
-      return { ...state, selectedWeather: action.payload, isLoading: false };
+      return {
+        ...state,
+        selectedWeather: action.payload,
+        isLoading: false,
+        error: "",
+      };
 
     case "error":
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, isLoading: false };
 
     default:
       throw new Error("Invalid action type...!");
@@ -44,6 +57,8 @@ function reducer(state, action) {
 function WeatherProvider({ children }) {
   const [{ isLoading, weatherData, selectedWeather, error }, dispatch] =
     useReducer(reducer, initialState);
+
+  console.log(weatherData);
 
   async function fetchWeatherPosition(lat, lon) {
     try {
@@ -91,7 +106,7 @@ function WeatherProvider({ children }) {
   useEffect(function () {
     (async function () {
       try {
-        dispatch({ type: "loading" });
+        dispatch({ type: "initialLoading" });
 
         const { lat, lon } = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(

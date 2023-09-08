@@ -11,7 +11,6 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useWeather } from "../contexts/WeatherContext";
-import Spinner from "./Spinner";
 
 ChartJS.register(
   CategoryScale,
@@ -55,9 +54,7 @@ const options = {
 };
 
 function CurrentWeatherChart() {
-  const { isLoading, selectedWeather } = useWeather();
-
-  if (isLoading) return <Spinner />;
+  const { selectedWeather } = useWeather();
 
   if (selectedWeather) {
     const { time, temperature } = selectedWeather;
