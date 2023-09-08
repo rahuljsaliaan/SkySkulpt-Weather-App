@@ -38,7 +38,7 @@ const options = {
       color: "white",
     },
   },
-  aspectRatio: 5,
+  aspectRatio: 16 / 9,
   scales: {
     x: {
       ticks: {
@@ -76,7 +76,7 @@ function CurrentWeatherChart() {
     };
 
     return (
-      <div className="shadow-xl rounded-lg animate-fade-in">
+      <div className="shadow-xl rounded-lg animate-fade-in w-full h-96">
         <Line options={options} data={data} />
       </div>
     );

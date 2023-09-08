@@ -8,7 +8,7 @@ function CurrentWeatherCard() {
 
   if (selectedWeather) {
     return (
-      <div className="bg-black/10 shadow-xl px-6 py-4 flex flex-col gap-5 animate-fade-in">
+      <div className="bg-black/10 shadow-xl px-6 py-4 flex flex-col justify-evenly animate-fade-in">
         <h3 className="text-white text-2xl text-center">
           Weather as of
           <div className="text-cyan-300">
@@ -16,7 +16,8 @@ function CurrentWeatherCard() {
             <em>{formatDate(selectedWeather.date)}</em>
           </div>
         </h3>
-        <div className="text-white flex gap-5">
+
+        <div className="text-white flex gap-6">
           <span className="">
             {getWeatherIcon(selectedWeather.avgWeathercode, 100)}
           </span>
@@ -25,7 +26,8 @@ function CurrentWeatherCard() {
             {selectedWeather.hourlyUnits.temperatureUnit}
           </span>
         </div>
-        <div className="flex gap-5 justify-evenly text-white">
+
+        <div className="flex gap-6 justify-evenly text-white">
           <span className="flex flex-col text-center">
             <h4 className="text-xl">💧Humidity</h4>
             <p>

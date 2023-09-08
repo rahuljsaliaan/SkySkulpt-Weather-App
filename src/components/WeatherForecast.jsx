@@ -14,7 +14,7 @@ function WeatherForecast() {
     } = weatherData.daily;
 
     return (
-      <div className="flex justify-evenly">
+      <div className="grid grid-cols-2 sm:grid-cols-7 gap-4">
         {dates?.map((date, i) => (
           <WeatherCard
             key={date}

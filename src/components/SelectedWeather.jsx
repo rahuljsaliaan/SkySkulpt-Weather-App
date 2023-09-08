@@ -4,12 +4,13 @@ import SelectedWeatherCard from "./SelectedWeatherCard";
 
 function SelectedWeather() {
   const { weatherData } = useWeather();
+
   if (weatherData) {
     return (
-      <div className="flex gap-5">
+      <section className="flex flex-col sm:flex-row gap-6 sm:px-[6em]">
         <SelectedWeatherCard />
         <SelectedWeatherChart />
-      </div>
+      </section>
     );
   }
 }

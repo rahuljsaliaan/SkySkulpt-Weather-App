@@ -6,7 +6,7 @@ function Title() {
   if (weatherData) {
     return (
       <div>
-        <h1 className="text-white text-center pt-5 text-3xl">
+        <h1 className="text-white text-center pt-5 text-2xl">
           🌐&nbsp;{weatherData.location}
         </h1>
       </div>
