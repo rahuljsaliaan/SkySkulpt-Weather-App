@@ -1,49 +1,50 @@
-import * as FaIcons from "react-icons/fa";
+import {
+  WiDaySunny,
+  WiCloud,
+  WiRain,
+  WiThunderstorm,
+  WiFog,
+  WiSnow,
+} from "weather-icons-react";
 
 export function getWeatherIcon(wmoCode, size = 70) {
   switch (wmoCode) {
-    case 0:
-      return <FaIcons.FaSun key="sun" size={size} />;
-    case 1:
-      return <FaIcons.FaCloudSun key="cloudSun" size={size} />;
-    case 2:
-      return <FaIcons.FaCloud key="cloud" size={size} />;
-    case 3:
-      return <FaIcons.FaCloud key="cloud" size={size} />;
-    case 45:
-    case 48:
-      return <FaIcons.FaSmog key="smog" size={size} />;
-    case 51:
-    case 56:
-    case 61:
-    case 66:
-    case 80:
-      return <FaIcons.FaCloudSunRain key="cloudSunRain" size={size} />;
-    case 53:
-    case 55:
-    case 63:
-    case 65:
-    case 57:
-    case 67:
-    case 81:
-    case 82:
-      return <FaIcons.FaCloudRain key="cloudRain" size={size} />;
-    case 71:
-    case 73:
-    case 75:
-    case 77:
-    case 85:
-    case 86:
-      return (
-        <FaIcons.FaCloudShowersHeavy key="cloudShowersHeavy" size={size} />
-      );
-
-    case 95:
-      return <FaIcons.FaBolt key="thunderBolt" size={size} />;
-    case 96:
-    case 99:
-      return <FaIcons.FaBolt key="thunderstorm" size={size} />;
-    default:
-      return <FaIcons.FaCloud key="cloud" size={size} />; // You can return null for unknown codes
+    case 1: // Partly cloudy
+      return <WiDaySunny size={size} color="#FFD700" />;
+    case 2: // Mostly cloudy
+      return <WiCloud size={size} color="#87CEEB" />;
+    case 3: // Overcast
+      return <WiCloud size={size} color="#888888" />;
+    case 45: // Fog
+    case 48: // Smoke
+      return <WiFog size={size} color="#A9A9A9" />;
+    case 51: // Light rain
+    case 56: // Freezing rain
+      return <WiRain size={size} color="#1E90FF" />;
+    case 61: // Light snow
+    case 66: // Ice pellets
+    case 80: // Showers
+      return <WiSnow size={size} color="#FFFFFF" />;
+    case 53: // Drizzle
+    case 55: // Freezing drizzle
+    case 63: // Rain showers
+    case 65: // Rain and snow
+    case 57: // Snow showers
+    case 67: // Snow and rain showers
+      return <WiRain size={size} color="#4682B4" />;
+    case 71: // Thunderstorm
+    case 73: // Thunderstorm with rain
+    case 75: // Thunderstorm with hail
+    case 77: // Thunderstorm with snow
+    case 85: // Severe thunderstorm
+    case 86: // Severe thunderstorm with hail
+      return <WiThunderstorm size={size} color="#FFA500" />;
+    case 95: // Severe thunderstorm with hail
+      return <WiThunderstorm size={size} color="#FF0000" />;
+    case 96: // Tornado
+    case 99: // Waterspout
+      return <WiThunderstorm size={size} color="#800080" />;
+    default: // Default to cloudy
+      return <WiCloud size={size} color="#87CEEB" />;
   }
 }
