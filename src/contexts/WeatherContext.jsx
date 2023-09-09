@@ -122,7 +122,7 @@ function WeatherProvider({ children }) {
           ...weatherData,
           location: `${(city && city + ",") || ""} ${
             (state && state + ",") || ""
-          } ${country || ""}`,
+          } ${(country && country + ",") || ""}`.slice(0, -1),
         },
       });
     } catch (error) {
