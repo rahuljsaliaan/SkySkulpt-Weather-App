@@ -6,10 +6,11 @@ import {
   useCallback,
 } from "react";
 import { formatTimestampToAMPM } from "../utils/Formatters/formatTimestampToAMPM";
-import { BASE_URL, DEFAULT_LOCATION, CURRENT_DATE } from "../config/config";
+import { BASE_URL, DEFAULT_LOCATION } from "../config/config";
 import PropTypes from "prop-types";
 import reverseGeoCode from "../utils/Transformers/reverseGeoCode";
 import geoCode from "../utils/Transformers/geoCode";
+import { formatLocation } from "../utils/Formatters/formatLocation";
 
 const WeatherContext = createContext();
 const initialState = {
@@ -82,7 +83,8 @@ function WeatherProvider({ children }) {
       if (location.length < 2)
         throw new Error("Please Type at least 2 characters");
 
-      const { city, state, country, lat, lng } = await geoCode(location);
+      const { city, state, country, lat, lng, locationCurrentDate } =
+        await geoCode(location);
 
       const weatherData = await fetchWeatherPosition(lat, lng);
 
@@ -90,9 +92,8 @@ function WeatherProvider({ children }) {
         type: "weather/loaded",
         payload: {
           ...weatherData,
-          location: `${(city && city + ",") || ""} ${
-            (state && state + ",") || ""
-          } ${country || ""}`,
+          location: formatLocation(city, state, country),
+          locationCurrentDate,
         },
       });
     } catch (error) {
@@ -114,15 +115,15 @@ function WeatherProvider({ children }) {
 
       const weatherData = await fetchWeatherPosition(lat, lon);
 
-      const { city, state, country } = await reverseGeoCode(lat, lon);
+      const { city, state, country, locationCurrentDate } =
+        await reverseGeoCode(lat, lon);
 
       dispatch({
         type: "weather/loaded",
         payload: {
           ...weatherData,
-          location: `${(city && city + ",") || ""} ${
-            (state && state + ",") || ""
-          } ${(country && country + ",") || ""}`.slice(0, -1),
+          location: formatLocation(city, state, country),
+          locationCurrentDate,
         },
       });
     } catch (error) {
@@ -149,7 +150,7 @@ function WeatherProvider({ children }) {
   );
 
   const handleOnSelectWeather = useCallback(
-    function (date = CURRENT_DATE) {
+    function (date = weatherData.daily.time[0]) {
       dispatch({ type: "loading" });
 
       const {
@@ -162,6 +163,7 @@ function WeatherProvider({ children }) {
           windspeed_10m: windSpeedUnit,
         },
       } = weatherData;
+
       const {
         temperature_2m: temperatureData,
         relativehumidity_2m: humidity,
@@ -194,7 +196,7 @@ function WeatherProvider({ children }) {
         Math.ceil(arr.reduce((acc, item) => acc + item, 0) / arr.length);
 
       const selectedWeatherData = {
-        date,
+        date: date,
         hourlyUnits: {
           temperatureUnit,
           humidityUnit,

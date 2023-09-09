@@ -1,4 +1,5 @@
 import { GEOCODING_API_KEY, GEOCODING_URL } from "../../config/config";
+import { timezoneDateConversion } from "./timezoneDateConversion";
 
 async function geoCode(location) {
   try {
@@ -22,8 +23,10 @@ async function geoCode(location) {
     const country = firstResult.components.country;
     const lat = firstResult.geometry.lat;
     const lng = firstResult.geometry.lng;
+    const timezone = firstResult.annotations.timezone;
+    const locationCurrentDate = timezoneDateConversion(timezone);
 
-    return { city, state, country, lat, lng };
+    return { city, state, country, lat, lng, locationCurrentDate, timezone };
   } catch (error) {
     throw new Error(error.message);
   }

@@ -1,4 +1,5 @@
 import { GEOCODING_API_KEY, GEOCODING_URL } from "../../config/config";
+import { timezoneDateConversion } from "./timezoneDateConversion";
 
 async function reverseGeoCode(lat, lon) {
   try {
@@ -21,8 +22,10 @@ async function reverseGeoCode(lat, lon) {
       result.components.county ||
       result.components.village;
     const state = result.components.state;
+    const timezone = result.annotations.timezone;
+    const locationCurrentDate = timezoneDateConversion(timezone);
 
-    return { city, state };
+    return { city, state, locationCurrentDate, timezone };
   } catch (error) {
     throw new Error(error.message);
   }

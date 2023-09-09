@@ -66,7 +66,7 @@ const options = {
   },
 };
 
-function CurrentWeatherChart() {
+function SelectedWeatherChart() {
   const { selectedWeather } = useWeather();
 
   if (selectedWeather) {
@@ -98,4 +98,4 @@ function CurrentWeatherChart() {
   }
 }
 
-export default CurrentWeatherChart;
+export default SelectedWeatherChart;

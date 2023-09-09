@@ -3,7 +3,7 @@ import { getWeatherIcon } from "../helpers/getWeatherIcon";
 import { formatDate } from "../utils/Formatters/formatDate";
 import { formatDay } from "../utils/Formatters/formatDay";
 
-function CurrentWeatherCard() {
+function SelectedWeatherCard() {
   const { selectedWeather } = useWeather();
 
   if (selectedWeather) {
@@ -55,4 +55,4 @@ function CurrentWeatherCard() {
   }
 }
 
-export default CurrentWeatherCard;
+export default SelectedWeatherCard;
