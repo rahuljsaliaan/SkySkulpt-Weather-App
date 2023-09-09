@@ -37,6 +37,10 @@ const options = {
       display: true,
       text: "Weather Summary",
       color: "white",
+      font: {
+        size: 22,
+        weight: 500,
+      },
     },
   },
   aspectRatio: 16 / 9,
