@@ -19,10 +19,11 @@ async function geoCode(location) {
     const firstResult = data.results[0];
     const city = firstResult.components.city || firstResult.components.town;
     const state = firstResult.components.state;
+    const country = firstResult.components.country;
     const lat = firstResult.geometry.lat;
     const lng = firstResult.geometry.lng;
 
-    return { city, state, lat, lng };
+    return { city, state, country, lat, lng };
   } catch (error) {
     throw new Error(error.message);
   }

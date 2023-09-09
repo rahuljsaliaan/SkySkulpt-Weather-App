@@ -82,13 +82,18 @@ function WeatherProvider({ children }) {
       if (location.length < 2)
         throw new Error("Please Type at least 2 characters");
 
-      const { city, state, lat, lng } = await geoCode(location);
+      const { city, state, country, lat, lng } = await geoCode(location);
 
       const weatherData = await fetchWeatherPosition(lat, lng);
 
       dispatch({
         type: "weather/loaded",
-        payload: { ...weatherData, location: `${city}, ${state}` },
+        payload: {
+          ...weatherData,
+          location: `${(city && city + ",") || ""} ${
+            (state && state + ",") || ""
+          } ${country || ""}`,
+        },
       });
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
@@ -109,11 +114,16 @@ function WeatherProvider({ children }) {
 
       const weatherData = await fetchWeatherPosition(lat, lon);
 
-      const { city, state } = await reverseGeoCode(lat, lon);
+      const { city, state, country } = await reverseGeoCode(lat, lon);
 
       dispatch({
         type: "weather/loaded",
-        payload: { ...weatherData, location: `${city}, ${state}` },
+        payload: {
+          ...weatherData,
+          location: `${(city && city + ",") || ""} ${
+            (state && state + ",") || ""
+          } ${country || ""}`,
+        },
       });
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
@@ -181,7 +191,7 @@ function WeatherProvider({ children }) {
       const mapWeatherData = (arr, data) => arr.map((item) => item[data]);
 
       const avg = (arr) =>
-        Math.round(arr.reduce((acc, item) => acc + item, 0) / arr.length);
+        Math.ceil(arr.reduce((acc, item) => acc + item, 0) / arr.length);
 
       const selectedWeatherData = {
         date,
