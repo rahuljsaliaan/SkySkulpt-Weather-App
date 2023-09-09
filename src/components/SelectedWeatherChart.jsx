@@ -29,8 +29,9 @@ const options = {
     legend: {
       position: "top",
       labels: {
-        color: "white", // Change the label text color to white
+        color: "white",
       },
+      onClick: () => {},
     },
     title: {
       display: true,
@@ -42,12 +43,20 @@ const options = {
   scales: {
     x: {
       ticks: {
-        color: "white", // Change the x-axis label text color to blue
+        maxTicksLimit: 10,
+        color: "white",
+      },
+      grid: {
+        display: false,
       },
     },
     y: {
       ticks: {
-        color: "white", // Change the y-axis label text color to blue
+        maxTicksLimit: 10,
+        color: "white",
+      },
+      grid: {
+        display: false,
       },
     },
   },
@@ -71,12 +80,14 @@ function CurrentWeatherChart() {
           data: temperature,
           borderColor: "cyan",
           backgroundColor: "rgba(0, 255, 255, 0.3)",
+          pointRadius: 2,
+          cubicInterpolationMode: "monotone",
         },
       ],
     };
 
     return (
-      <div className="shadow-xl rounded-lg animate-fade-in w-full h-96">
+      <div className="bg-black/10 shadow-xl rounded-lg animate-fade-in w-full h-96 px-6 py-4">
         <Line options={options} data={data} />
       </div>
     );
