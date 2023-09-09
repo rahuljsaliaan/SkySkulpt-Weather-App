@@ -91,7 +91,7 @@ function SelectedWeatherChart() {
     };
 
     return (
-      <div className="bg-black/10 shadow-xl rounded-lg animate-fade-in w-full h-96 px-6 py-4">
+      <div className="bg-black/10 shadow-xl max-w-[95%] rounded-lg animate-fade-in w-full h-96 px-6 py-4">
         <Line options={options} data={data} />
       </div>
     );

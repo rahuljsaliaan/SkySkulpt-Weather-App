@@ -11,7 +11,7 @@ function WeatherCard({ date, min, max, code, onSelectWeather, isSelected }) {
     >
       <div className="py-2">{getWeatherIcon(code)}</div>
       <p>{date}</p>
-      <p>
+      <p className="text-lg">
         {min}&deg; &mdash; <strong>{max}</strong>
         &deg;
       </p>
