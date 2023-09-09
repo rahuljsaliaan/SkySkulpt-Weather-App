@@ -95,43 +95,48 @@ function WeatherProvider({ children }) {
     }
   }
 
-  useEffect(function () {
-    (async function () {
+  const fetchWeatherClientLocation = useCallback(async function () {
+    try {
+      dispatch({ type: "initialLoading" });
+
+      const { lat, lon } = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) =>
+            resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
+          (error) => reject(error)
+        );
+      });
+
+      const weatherData = await fetchWeatherPosition(lat, lon);
+
+      const { city, state } = await reverseGeoCode(lat, lon);
+
+      dispatch({
+        type: "weather/loaded",
+        payload: { ...weatherData, location: `${city}, ${state}` },
+      });
+    } catch (error) {
+      dispatch({ type: "error", payload: error.message });
+
       try {
-        dispatch({ type: "initialLoading" });
+        const data = await fetchWeatherPosition(
+          DEFAULT_LOCATION.lat,
+          DEFAULT_LOCATION.lon
+        );
 
-        const { lat, lon } = await new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(
-            (pos) =>
-              resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
-            (error) => reject(error)
-          );
-        });
-
-        const weatherData = await fetchWeatherPosition(lat, lon);
-
-        const { city, state } = await reverseGeoCode(lat, lon);
-
-        dispatch({
-          type: "weather/loaded",
-          payload: { ...weatherData, location: `${city}, ${state}` },
-        });
+        dispatch({ type: "weather/loaded", payload: data });
       } catch (error) {
         dispatch({ type: "error", payload: error.message });
-
-        try {
-          const data = await fetchWeatherPosition(
-            DEFAULT_LOCATION.lat,
-            DEFAULT_LOCATION.lon
-          );
-
-          dispatch({ type: "weather/loaded", payload: data });
-        } catch (error) {
-          dispatch({ type: "error", payload: error.message });
-        }
       }
-    })();
+    }
   }, []);
+
+  useEffect(
+    function () {
+      fetchWeatherClientLocation();
+    },
+    [fetchWeatherClientLocation]
+  );
 
   const handleOnSelectWeather = useCallback(
     function (date = CURRENT_DATE) {
@@ -224,6 +229,7 @@ function WeatherProvider({ children }) {
         weatherData,
         selectedWeather,
         handleOnSelectWeather,
+        fetchWeatherClientLocation,
         fetchWeatherQuery,
       }}
     >

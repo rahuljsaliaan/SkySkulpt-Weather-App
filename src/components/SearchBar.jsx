@@ -24,7 +24,7 @@ function SearchBar() {
         value={cityName}
       />
       {!isLoading ? (
-        <button className="bg-cyan-100 w-[60px] aspect-square rounded-full text-2xl shadow-xl hover:bg-cyan-50 hover:scale-105">
+        <button className="bg-cyan-100 w-12 aspect-square rounded-full text-2xl shadow-xl hover:bg-cyan-50 hover:scale-105">
           🔍
         </button>
       ) : (

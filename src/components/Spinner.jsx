@@ -15,10 +15,10 @@ const spinnerVariants = {
   },
 };
 
-function Spinner({ className }) {
+function Spinner({ size = "12" }) {
   return (
     <motion.div
-      className={`partial-circle-spinner ${className}`}
+      className={`w-${size} aspect-square border-t-8 border-b-8 border-white rounded-full`}
       variants={spinnerVariants}
       initial="initial"
       animate="animate"
