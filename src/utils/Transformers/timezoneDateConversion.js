@@ -1,7 +1,6 @@
 import { DEFAULT_DATE_LOCALE } from "../../config/config";
 
 export function timezoneDateConversion(timezone) {
-  console.log(timezone);
   const currentDate = new Date();
   const options = {
     timeZone: timezone.name,
