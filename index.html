@@ -3,14 +3,32 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/ico" href="/public/skyskulpt-logo.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1e3a8a" />
   <title>SkySkulpt</title>
+  <meta name="description"
+    content="SkySkulpt Weather: 7-Day Forecast, Instant Insights! Stay ahead of the weather with modern design and Vite-powered speed." />
+
+  <link rel="icon" type="image/ico" href="/public/skyskulpt-logo.ico" />
+  <link rel="canonical" href="https://vortexa.netlify.app/" />
+  <link rel="manifest" href="/manifest.json" />
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/serviceWorker.js")
+          .catch((RegErr) => {
+            console.log("SW Registration failed: ", RegErr);
+          });
+      });
+    }
+  </script>
 </body>
 
 </html>
