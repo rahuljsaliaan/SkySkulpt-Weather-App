@@ -49,3 +49,7 @@ canvas {
   border-right: 8px solid white;
   border-bottom: 8px solid transparent;
 }
+
+.outline-ring-shadow {
+  box-shadow: 0 0 10px 0.05em rgb(0, 255, 255);
+}
