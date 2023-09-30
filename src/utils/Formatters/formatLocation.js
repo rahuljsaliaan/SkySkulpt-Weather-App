@@ -1,5 +1,3 @@
 export function formatLocation(city, state, country) {
-  return `${(city && city) || ""} ${(state && ", " + state) || ""} ${
-    (country && ", " + country) || ""
-  }`.slice(0, -1);
+  return [city, state, country].filter(Boolean).join(", "); // any falsy value will be removed (boolean is a built in js function)
 }

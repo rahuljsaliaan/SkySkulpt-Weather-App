@@ -10,6 +10,7 @@ function WeatherCard({ date, min, max, code, onSelectWeather, isSelected }) {
         isSelected &&
         "scale-105 shadow-2xl bg-gradient-to-b from-cyan-400 to-blue-500 backdrop-blur-md ring-[3px] ring-cyan-400"
       }
+
       `}
     >
       <div className="py-2">{getWeatherIcon(code)}</div>
