@@ -8,7 +8,7 @@ function SelectedWeatherCard() {
 
   if (selectedWeather) {
     return (
-      <div className="bg-black/10 max-w-full rounded-lg shadow-xl px-6 py-4 flex flex-col justify-evenly animate-fade-in">
+      <div className="bg-gradient-to-b from-cyan-700 to-blue-800 backdrop-blur-md max-w-full rounded-lg shadow-xl px-6 py-4 flex flex-col justify-evenly animate-fade-in">
         <h3 className="text-white text-2xl text-center">
           Weather as of
           <div className="text-cyan-300">
