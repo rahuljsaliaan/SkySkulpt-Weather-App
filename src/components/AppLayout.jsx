@@ -13,7 +13,7 @@ function AppLayout() {
   if (initialLoading) return <Loading />;
 
   return (
-    <div className={`min-h-screen w-full bg-[url(/background.png)]`}>
+    <div className="bg-repeat- min-h-screen w-full bg-[url(/background.png)] bg-cover bg-no-repeat">
       {error && <ToastMessage type="error" message={error} />}
       <Navigation />
       <div className="flex flex-col items-center justify-center gap-5 px-4 py-4 xl:py-0">
