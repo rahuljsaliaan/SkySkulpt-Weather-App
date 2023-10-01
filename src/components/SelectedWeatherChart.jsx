@@ -20,7 +20,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  Legend
+  Legend,
 );
 
 const options = {
@@ -91,7 +91,7 @@ function SelectedWeatherChart() {
     };
 
     return (
-      <div className="bg-black/10 max-w-full shadow-xl rounded-lg animate-fade-in w-full h-96 px-6 py-4">
+      <div className="h-96 w-full max-w-full rounded-lg bg-black/10 px-6 py-4 shadow-xl">
         <Line options={options} data={data} />
       </div>
     );

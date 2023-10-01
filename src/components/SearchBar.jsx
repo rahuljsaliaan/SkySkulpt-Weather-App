@@ -15,16 +15,16 @@ function SearchBar() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex justify-center items-center gap-3"
+      className="flex items-center justify-center gap-3"
     >
       <input
-        className="rounded-lg text-lg w-full sm:max-w-[400px] sm:text-xl px-4 py-2 outline-none border-4 border-blue-500 focus:border-blue-400"
+        className="w-full rounded-lg border-4 border-blue-500 px-4 py-2 text-lg outline-none focus:border-blue-400 sm:max-w-[400px] sm:text-xl"
         onChange={(e) => setCityName(e.target.value)}
         placeholder="Search by City..."
         value={cityName}
       />
       {!isLoading ? (
-        <button className="bg-cyan-100 w-12 aspect-square rounded-full text-2xl shadow-xl hover:bg-cyan-50 hover:scale-105">
+        <button className="aspect-square w-12 rounded-full bg-cyan-100 text-2xl shadow-xl hover:scale-105 hover:bg-cyan-50">
           🔍
         </button>
       ) : (

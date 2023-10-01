@@ -15,7 +15,7 @@ function AppLayout() {
     <div className="w-full min-h-screen bg-gradient-to-b from-indigo-900 via-blue-900 to-blue-800">
       {error && <ToastMessage type="error" message={error} />}
       <Navigation />
-      <div className="flex flex-col justify-center items-center gap-5 px-4">
+      <div className="flex flex-col justify-center items-center gap-5 px-4 py-4 md:py-0">
         <Title />
         <SelectedWeather />
         <WeatherForecast />
