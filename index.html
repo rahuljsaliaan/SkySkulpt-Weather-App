@@ -24,7 +24,7 @@
         navigator.serviceWorker
           .register("/serviceWorker.js")
           .catch((RegErr) => {
-            console.log("SW Registration failed: ", RegErr);
+            console.error("SW Registration failed: ", RegErr);
           });
       });
     }

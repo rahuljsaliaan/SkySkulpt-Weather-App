@@ -14,7 +14,7 @@ function WeatherForecast() {
     } = weatherData.daily;
 
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-5">
+      <div className="grid grid-cols-2 gap-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
         {dates?.map((date, i) => (
           <WeatherCard
             key={date}

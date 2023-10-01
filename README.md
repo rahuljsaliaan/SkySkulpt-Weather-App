@@ -33,6 +33,7 @@ Witness the power of SkySkulpt Weather App by exploring the live demo of the pro
 - React
 - CSS3
 - JavaScript
+- Tailwind
 - Vite (for fast development)
 - Netlify (for deployment)
 

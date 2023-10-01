@@ -12,10 +12,10 @@ function AppLayout() {
   if (initialLoading) return <Loading />;
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-indigo-900 via-blue-900 to-blue-800">
+    <div className="min-h-screen w-full bg-gradient-to-b  from-blue-900 to-black backdrop-blur-md">
       {error && <ToastMessage type="error" message={error} />}
       <Navigation />
-      <div className="flex flex-col justify-center items-center gap-5 px-4 py-4 md:py-0">
+      <div className="flex flex-col items-center justify-center gap-5 px-4 py-4 md:py-0">
         <Title />
         <SelectedWeather />
         <WeatherForecast />
