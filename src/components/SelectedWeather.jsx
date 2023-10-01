@@ -7,7 +7,7 @@ function SelectedWeather() {
 
   if (weatherData) {
     return (
-      <section className="flex flex-col gap-5 sm:px-[6em] lg:flex-row">
+      <section className="grid grid-cols-1 gap-5 sm:px-[6em] lg:grid-cols-[1fr,2fr]">
         <SelectedWeatherCard />
         <SelectedWeatherChart />
       </section>

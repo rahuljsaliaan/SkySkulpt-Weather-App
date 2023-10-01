@@ -91,7 +91,7 @@ function SelectedWeatherChart() {
     };
 
     return (
-      <div className="h-96 w-full max-w-full rounded-lg bg-black/10 px-6 py-4 shadow-xl">
+      <div className="h-96 w-full max-w-full rounded-lg bg-gradient-to-br from-cyan-400/40 to-blue-500/40 px-6 py-4 shadow-xl backdrop-blur-sm">
         <Line options={options} data={data} />
       </div>
     );

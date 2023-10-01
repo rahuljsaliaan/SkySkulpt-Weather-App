@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar";
 
 function Navigation() {
   return (
-    <header className="flex justify-center items-center w-full p-2 sm:p-4 gap-3 bg-gradient-to-b from-teal-400 to-blue-500">
+    <header className="flex w-full items-center justify-center gap-3 bg-gradient-to-b from-cyan-400/70 to-blue-500/70 p-2 backdrop-blur-sm sm:p-4">
       <Logo />
       <SearchBar />
     </header>

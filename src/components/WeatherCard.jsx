@@ -5,8 +5,8 @@ function WeatherCard({ date, min, max, code, onSelectWeather, isSelected }) {
   return (
     <button
       onClick={onSelectWeather}
-      className={`bg-gradient-to-b from-cyan-700 to-blue-800 backdrop-blur-md text-lg text-white rounded-lg shadow-xl py-3 px-6 transition-all hover:scale-105 hover:shadow-2xl animate-fade-in
-      ${isSelected && "scale-105 shadow-2xl ring-[3px] ring-cyan-400"}
+      className={`rounded-lg bg-gradient-to-br from-cyan-400/40 to-blue-500/40 px-6 py-3 text-lg text-white shadow-xl backdrop-blur-sm transition-all hover:scale-105 hover:shadow-2xl
+      ${isSelected && "scale-105 bg-cyan-400 shadow-2xl"}
 
       `}
     >

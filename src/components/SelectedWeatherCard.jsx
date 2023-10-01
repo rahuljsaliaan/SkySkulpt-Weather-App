@@ -8,8 +8,8 @@ function SelectedWeatherCard() {
 
   if (selectedWeather) {
     return (
-      <div className="flex max-w-full flex-col justify-evenly rounded-lg bg-black/10 px-6 py-4 shadow-xl">
-        <h3 className="text-center text-2xl text-white">
+      <div className="flex max-w-full flex-col justify-evenly rounded-lg bg-gradient-to-br from-cyan-400/40 to-blue-500/40 px-6 py-4 shadow-xl backdrop-blur-sm">
+        <h3 className="text-center text-xl text-white lg:text-2xl">
           Weather as of
           <div className="text-cyan-300">
             <strong>{formatDay(selectedWeather.date)}</strong>&nbsp;
@@ -29,21 +29,27 @@ function SelectedWeatherCard() {
 
         <div className="flex justify-evenly gap-5 text-white">
           <span className="flex flex-col text-center">
-            <h4 className="text-xl">💧Humidity</h4>
+            <h4 className="text-center text-lg text-white lg:text-xl">
+              💧Humidity
+            </h4>
             <p>
               {selectedWeather.avgHumidity}&nbsp;
               {selectedWeather.hourlyUnits.humidityUnit}
             </p>
           </span>
           <span className="flex flex-col text-center">
-            <h4 className="text-xl">⬆ Pressure</h4>
+            <h4 className="text-center text-lg text-white lg:text-xl">
+              ⬆ Pressure
+            </h4>
             <p>
               {selectedWeather.avgPressure}&nbsp;
               {selectedWeather.hourlyUnits.pressureUnit}
             </p>
           </span>
           <span className="flex flex-col text-center">
-            <h4 className="text-xl">💨 Wind</h4>
+            <h4 className="text-center text-lg text-white lg:text-xl">
+              💨 Wind
+            </h4>
             <p>
               {selectedWeather.avgWindSpeed}&nbsp;
               {selectedWeather.hourlyUnits.windSpeedUnit}

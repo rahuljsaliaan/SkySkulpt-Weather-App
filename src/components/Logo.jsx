@@ -7,10 +7,10 @@ function Logo() {
   return (
     <button
       onClick={fetchWeatherClientLocation}
-      className="bg-black/50 p-2 sm:px-4 rounded-full shadow-xl flex justify-center items-center sm:absolute sm:left-4 gap-3 hover:bg-black/30"
+      className="flex items-center justify-center gap-3 rounded-full bg-black/50 p-2 shadow-xl hover:bg-black/30 md:absolute md:left-4 md:px-4"
     >
       <img className="w-10" alt="logo" src={logo} />
-      <h1 className="hidden sm:block text-2xl text-white font-bold">
+      <h1 className="hidden text-2xl font-bold text-white md:block">
         SkySkulpt
       </h1>
     </button>

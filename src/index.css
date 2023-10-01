@@ -37,10 +37,6 @@ canvas {
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-in-out, scaleIn 0.5s ease-in-out;
-}
-
 .partial-circle-spinner {
   border-radius: 50%;
   border: 8px solid transparent;
