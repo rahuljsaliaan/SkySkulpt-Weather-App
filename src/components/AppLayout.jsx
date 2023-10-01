@@ -5,7 +5,7 @@ import WeatherForecast from "./WeatherForecast";
 import ToastMessage from "./ToastMessage";
 import Loading from "./Loading";
 import Title from "./Title";
-import { BACKGROUND_URL } from "../config/config";
+// import background from "../assets/background.png";
 
 function AppLayout() {
   const { initialLoading, error } = useWeather();
@@ -13,7 +13,7 @@ function AppLayout() {
   if (initialLoading) return <Loading />;
 
   return (
-    <div className={`min-h-screen w-full bg-[url(${BACKGROUND_URL})]`}>
+    <div className={`min-h-screen w-full bg-[url(/background.png)]`}>
       {error && <ToastMessage type="error" message={error} />}
       <Navigation />
       <div className="flex flex-col items-center justify-center gap-5 px-4 py-4 xl:py-0">
