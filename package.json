@@ -1,7 +1,8 @@
 {
   "name": "skyskulpt",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "SkySkulpt Weather: 7-Day Forecast, Instant Insights! Stay ahead of the weather with modern design and Vite-powered speed",
   "type": "module",
   "scripts": {
     "dev": "vite --host --open",
@@ -9,6 +10,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "author": "Rahul J",
+  "license": "MIT",
   "dependencies": {
     "chart.js": "^4.4.0",
     "eslint-config-react-app": "^7.0.1",
